@@ -123,11 +123,11 @@ The dataset is divided once, upfront, into a **training pool** and a **fixed hel
 | RF | Both | `n_estimators=100`, `max_depth=None` |
 | LR | Both | `C=10000`, `penalty='l1'`, `solver='saga'` |
 | KNN | Both | `n_neighbors=3`, `metric='manhattan'` |
-| MLP | Both | Dense(64→32→10→output), Dropout(0.3), Adam, 10 epochs |
-| CNN | Both | Conv1D(32,64) + GAP + Dense(128), Dropout(0.2), Adam, 10 epochs |
-| LSTM | Both | LSTM(64→32) + Dense(output), Dropout(0.2), Adam, 10 epochs |
-| GRU | Both | GRU(64→32) + Dense(output), Dropout(0.2), Adam, 10 epochs |
-| KAN | Both | Per-feature Dense(64) branches + add + Dense(output), Adam, 10 epochs |
+| MLP | Both | Dense(64→32→10→output), Dropout(0.3), Adam, 30 epochs |
+| CNN | Both | Conv1D(32,64) + GAP + Dense(128), Dropout(0.2), Adam, 30 epochs |
+| LSTM | Both | LSTM(64→32) + Dense(output), Dropout(0.2), Adam, 30 epochs |
+| GRU | Both | GRU(64→32) + Dense(output), Dropout(0.2), Adam, 30 epochs |
+| KAN | Both | Per-feature Dense(64) branches + add + Dense(output), Adam, 30 epochs |
 
 ---
 
@@ -189,20 +189,6 @@ Install in Colab with:
 ```
 
 ---
-
-## Citation
-
-If you use this code in your research, please cite the associated paper:
-
-```bibtex
-@article{yourpaper2025,
-  title   = {Your Paper Title Here},
-  author  = {Your Name and Co-authors},
-  journal = {Journal Name},
-  year    = {2025},
-  doi     = {10.xxxx/xxxxxxx}
-}
-```
 
 > Update the citation block above with the actual paper details upon publication.
 
