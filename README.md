@@ -152,6 +152,13 @@ The dataset is divided once, upfront, into a **training pool** and a **fixed hel
 > **Note:** Raw datasets are not included in this repository. Download from the links above and place them in your Google Drive under the paths above, or update `folder_path` in each notebook.
 
 ---
+### EEG Brainwave
+- **Source:** [EEG Brainwave Dataset (Feeling Emotions)](https://cainvas-static.s3.amazonaws.com/media/user_data/cainvas-admin/emotions.csv)
+- **Format:** Single CSV file, loaded directly from a public URL — no Google Drive setup required
+- **Labels:** String emotion labels in a `label` column (e.g., `"POSITIVE"`, `"NEGATIVE"`, `"NEUTRAL"`), encoded with `LabelEncoder`
+- **Features:** All columns except `label`
+
+> **Note:** The GAMEEMO and LUMED raw datasets are not included in this repository. Download them from the links above and place them in your Google Drive. The EEG Brainwave dataset is loaded directly from its public URL in the code.
 
 ## How to Run
 
@@ -160,6 +167,57 @@ The dataset is divided once, upfront, into a **training pool** and a **fixed hel
 3. Place the dataset files under the expected Google Drive path (see above), or edit `folder_path` at the top of the notebook.
 4. For **Scheme 2** notebooks, ensure the static test file is present.
 5. **Run all cells.** The notebook is pre-configured for `train_size = 0.95`. Change this value and re-run to sweep across the full range (0.95 → 0.05).
+
+## Adapting the Notebooks for the EEG Brainwave Dataset
+Adapting any notebook to use the EEG Brainwave dataset requires only **3 small changes** at the top of each notebook — the model code, CV loop, and evaluation section remain identical.
+
+### Change 1 — Replace the data loading block
+
+Remove the Google Drive mounting and file-reading loop. Replace with:
+
+```python
+import pandas as pd
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+
+df = pd.read_csv('https://cainvas-static.s3.amazonaws.com/media/user_data/cainvas-admin/emotions.csv')
+
+X = df.drop(columns=['label']).values
+y_raw = df['label'].values
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+label_enc = LabelEncoder()
+y = label_enc.fit_transform(y_raw)
+```
+
+### Change 2 — Scheme 1 (Variable Test): update the split line
+
+```python
+# Replace the GAMEEMO/LUMED split with:
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(
+    X_scaled, y, train_size=train_size, random_state=42, stratify=y)
+```
+
+### Change 3 — Scheme 2 (Static Test): update the pool and test-set lines
+
+Since there are no separate subject files, split the single dataframe once upfront to create a fixed test set:
+
+```python
+from sklearn.model_selection import train_test_split
+
+# Create a fixed test set once (e.g. 20%) — reuse this across all steps
+X_pool, X_test, y_pool, y_test = train_test_split(
+    X_scaled, y, test_size=0.20, random_state=42, stratify=y)
+
+# At each step, subsample the training pool
+import numpy as np
+idx = np.random.RandomState(42).choice(len(X_pool), size=int(train_size * len(X_pool)), replace=False)
+X_train, y_train = X_pool[idx], y_pool[idx]
+```
+
+Everything below these lines (model definition, 5-fold CV loop, evaluation, confusion matrix) stays exactly the same.
 
 ---
 
