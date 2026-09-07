@@ -134,7 +134,7 @@ The dataset is divided once, upfront, into a **training pool** and a **fixed hel
 ## Datasets
 
 ### GAMEEMO
-- **Source:** [GAMEEMO EEG Dataset](https://www.sciencedirect.com/science/article/pii/S2352340920307319)
+- **Source:** [GAMEEMO EEG Dataset](https://www.kaggle.com/datasets/sigfest/database-for-emotion-recognition-system-gameemo)
 - **Subjects:** 28 participants, 4 games each
 - **Labels:** Valence and Arousal (emotion dimensions)
 - **Files:** `S{id:02}_G{game}_Denoised.csv` (e.g., `S01_G1_Denoised.csv`)
@@ -142,7 +142,7 @@ The dataset is divided once, upfront, into a **training pool** and a **fixed hel
 - **Static test file (Scheme 2):** `gameemo_test.csv` in the same folder
 
 ### LUMED
-- **Source:** [LUMED EEG Dataset](https://data.mendeley.com/datasets/6t4dspz7jm/1)
+- **Source:** [LUMED EEG Dataset](https://figshare.com/articles/dataset/Loughborough_University_Multimodal_Emotion_Dataset_-_2/12644033)
 - **Subjects:** 13 participants
 - **Labels:** Integer class labels in `label` column (stored as `"[1]"` strings)
 - **Files:** `wavelet_denoised_s{id:02}.csv` (e.g., `wavelet_denoised_s01.csv`)
