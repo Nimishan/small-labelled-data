@@ -207,9 +207,9 @@ Since there are no separate subject files, split the single dataframe once upfro
 ```python
 from sklearn.model_selection import train_test_split
 
-# Create a fixed test set once (e.g. 20%) — reuse this across all steps
+# Create a fixed test set once (e.g. 10%)
 X_pool, X_test, y_pool, y_test = train_test_split(
-    X_scaled, y, test_size=0.20, random_state=42, stratify=y)
+    X_scaled, y, test_size=0.10, random_state=42, stratify=y)
 
 # At each step, subsample the training pool
 import numpy as np
